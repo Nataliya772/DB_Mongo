@@ -20,14 +20,11 @@ def read_data(csv_file, db):
         data_srv = list(reader)
         new_list = []
         for data in data_srv:
-            dict = {'Исполнитель': [], 'Цена': [], 'Место': [], 'Дата': []}
-            dict['Исполнитель'].append(data['Исполнитель'])
-            dict['Цена'].append(int(data['Цена']))
-            dict['Место'].append(data['Место'])
-            datetime_object = datetime.strptime(data['Дата']+'.2020', '%d.%m.%Y')
-            dict['Дата'].append(datetime_object)
-            new_list.append(dict)
+            d_o = datetime.strptime(data['Дата'] + '.2020', '%d.%m.%Y')
+            d = dict(Исполнитель=data['Исполнитель'], Цена=int(data['Цена']), Место=data['Место'], Дата=[d_o])
+            new_list.append(d)
         conserts.insert_many(new_list)
+
 
 def find_cheapest(db):
     """
@@ -64,4 +61,4 @@ if __name__ == '__main__':
     #find_cheapest(artists_db1)
     #conserts.drop()
     #find_by_name('Hit Music', artists_db1)
-    find_early_date('01.03.2020', '30.07.2020', artists_db1)
+    find_early_date('01.05.2020', '30.07.2020', artists_db1)
